@@ -88,4 +88,8 @@ storage/
 .env.*.php
 .env.php
 .env
-.env.example
+
+.idea/
+
+jira-rest-client.log
+composer.lock

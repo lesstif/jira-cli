@@ -1,12 +1,23 @@
 #!/usr/bin/env php
 
 <?php
+
+$appName = "PHP JIRA Command Line";
+$appVer = "0.01";
+
 if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/../../autoload.php';
 } else {
     require __DIR__.'/vendor/autoload.php';
 }
 
-$app = new Symfony\Component\Console\Application('PHP TimeTracking', '0.1');
-$app->add(new Lesstif\TimeTrack\Prompt());
+$app = new Symfony\Component\Console\Application($appName, $appVer);
+
+// Project Command
+$app->add(new Lesstif\JiraCli\Project\ListCommand());
+$app->add(new Lesstif\JiraCli\Project\ShowCommand());
+
+// Issue Command
+$app->add(new Lesstif\JiraCli\Issue\CreateCommand());
+
 $app->run();
