@@ -10,7 +10,8 @@
     "lesstif/php-jira-rest-client": "^1.7"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.4"
+    "phpunit/phpunit": "~4.4",
+    "mockery/mockery": "^0.9.4"
   },
   "license": "Apache 2.0",
   "authors": [
@@ -24,7 +25,7 @@
     "psr-4" : {
       "Lesstif\\JiraCli\\": "src/"
     },
-    "bin": ["php-timetrack"],
+    "bin": ["jira-cli"],
     "scripts": {
       "test": [
         "phpunit"
@@ -32,9 +33,6 @@
       "test-ci": [
         "phpunit --verbose --coverage-clover build/logs/clover.xml"
       ]
-    },
-    "config": {
-      "process-timeout": 0
     }
   }
 }
