@@ -24,15 +24,6 @@
   "autoload": {
     "psr-4" : {
       "Lesstif\\JiraCli\\": "src/"
-    },
-    "bin": ["jira-cli"],
-    "scripts": {
-      "test": [
-        "phpunit"
-      ],
-      "test-ci": [
-        "phpunit --verbose --coverage-clover build/logs/clover.xml"
-      ]
     }
   }
 }
