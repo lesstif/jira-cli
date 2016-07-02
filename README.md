@@ -52,11 +52,12 @@ copy .env.example file to .env on your project root and editing it.
 ### Get Project Info
 
 ```sh
-$ php jira-cli.php project:list --field-exclude "self,projectCategory,avatarUrls"
+$ php jira-cli project:show MYPROJECT --field-exclude "self,avatarUrls,roles,versions"
 ```
 
 ### Get All Project list
 
 ```sh
-$ php jira-cli.php project:show MYPROJECT --field-exclude "self,avatarUrls,roles,versions"
+$ php jira-cli project:list --field-exclude "self,projectCategory,avatarUrls"
+
 ```
