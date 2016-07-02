@@ -20,7 +20,8 @@ class ShowCommand extends SymfonyCommand
             ->setDefinition(
                 new InputDefinition([
                     new InputArgument('name', InputArgument::REQUIRED, 'specify project name or key'),
-                    new InputArgument('field', InputArgument::OPTIONAL|InputArgument::IS_ARRAY, 'show specific field only'),
+                    //new InputOption('field-exclude', InputArgument::OPTIONAL|InputArgument::IS_ARRAY, 'show specific field only'),
+                    new InputOption('field-exclude', 'f', InputOption::VALUE_REQUIRED, 'exclude specific field'),
                 ])
             );
         ;
@@ -31,13 +32,15 @@ class ShowCommand extends SymfonyCommand
         // project
         $nameOrKey = strtoupper($input->getArgument('name'));
 
+        $field_exclude = explode(',', $input->getOption('field-exclude'));
+
         try {
             $proj = new ProjectService();
 
             //Project
             $p = $proj->get($nameOrKey);
 
-            $output->writeln($p);
+            $output->writeln($p->toString($field_exclude));
         } catch (JiraException $e) {
             $output->writeln("Error Occured! " . $e->getMessage());
         }

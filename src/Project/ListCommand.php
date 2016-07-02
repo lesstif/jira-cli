@@ -20,23 +20,27 @@ class ListCommand extends SymfonyCommand
             ->setDescription('project show command')
             ->setDefinition(
                 new InputDefinition([
-                    new InputOption('field', 'f', InputOption::VALUE_OPTIONAL, 'show specific field only'),
+                    new InputOption('field-exclude', 'f', InputOption::VALUE_REQUIRED, 'exclude specific field'),
                 ])
             );
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $field = $input->getOption('field');
-
+        $field_exclude = explode(',', $input->getOption('field-exclude'));
         try {
             $proj = new ProjectService();
 
             $prjs = $proj->getAllProjects();
 
             foreach ($prjs as $p) {
-                $output->writeln($p);
+
+                $output->writeln($p->toString($field_exclude));
             }
         } catch (JiraException $e) {
             $output->writeln("Error Occured! " . $e->getMessage());
