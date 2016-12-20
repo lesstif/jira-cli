@@ -2,6 +2,7 @@
 
 namespace Lesstif\JiraCli\Project;
 
+use Lesstif\JiraCli\JiraCommand;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,7 +12,10 @@ use Symfony\Component\Console\Input\InputDefinition;
 
 use JiraRestApi\Project\ProjectService;
 
-class ListCommand extends SymfonyCommand
+use PhpSchool\CliMenu\CliMenu;
+use PhpSchool\CliMenu\CliMenuBuilder;
+
+class ListCommand extends JiraCommand
 {
     protected function configure()
     {
@@ -38,10 +42,33 @@ class ListCommand extends SymfonyCommand
 
             $prjs = $proj->getAllProjects();
 
-            foreach ($prjs as $p) {
-
-                $output->writeln($p->toString($field_exclude));
+            if (!$this->showMenu) {
+                foreach ($prjs as $p) {
+                    $output->writeln($p->toString($field_exclude));
+                }
+                return;
             }
+
+            $itemCallable = function (CliMenu $menu) {
+                $text = explode("-", $menu->getSelectedItem()->getText());
+                $key = trim($text[0]);
+
+                $p = (new ProjectService())->get($key);
+                var_dump($p);
+            };
+
+            $builder = (new CliMenuBuilder)
+                ->setTitle('JIRA Project List');
+
+            foreach ($prjs as $p) {
+                $builder->addItem($p->key . " - \"" . $p->name. "\"", $itemCallable, true);
+            }
+
+            $menu = $builder->addLineBreak('-')
+                ->build();
+
+            $menu->open();
+
         } catch (JiraException $e) {
             $output->writeln("Error Occured! " . $e->getMessage());
         }

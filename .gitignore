@@ -93,3 +93,4 @@ storage/
 
 jira-rest-client.log
 composer.lock
+jira-cli.phar

@@ -2,7 +2,7 @@
 
 namespace Lesstif\JiraCli\Project;
 
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Lesstif\JiraCli\JiraCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use JiraRestApi\Project\ProjectService;
 
-class ShowCommand extends SymfonyCommand
+class ShowCommand extends JiraCommand
 {
     protected function configure()
     {

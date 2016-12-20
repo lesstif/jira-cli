@@ -1,0 +1,9 @@
+{
+    "algorithm": "SHA256",
+    "compression": "NONE",
+    "files": ["jira-cli"],
+    "directories": ["src", "vendor"],
+    "main": "jira-cli",
+    "output": "jira-cli.phar",
+    "stub": true
+}
