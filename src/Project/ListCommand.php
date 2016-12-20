@@ -15,6 +15,8 @@ use JiraRestApi\Project\ProjectService;
 use PhpSchool\CliMenu\CliMenu;
 use PhpSchool\CliMenu\CliMenuBuilder;
 
+use League\CLImate\CLImate;
+
 class ListCommand extends JiraCommand
 {
     protected function configure()
@@ -25,6 +27,7 @@ class ListCommand extends JiraCommand
             ->setDefinition(
                 new InputDefinition([
                     new InputOption('field-exclude', 'f', InputOption::VALUE_REQUIRED, 'exclude specific field'),
+                    new InputOption('menu', 'm', InputOption::VALUE_NONE, 'show cli Menu'),
                 ])
             );
         ;
@@ -37,14 +40,24 @@ class ListCommand extends JiraCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $field_exclude = explode(',', $input->getOption('field-exclude'));
+
+        $this->showMenu = $input->getOption('menu') ? true : $this->showMenu;
+
         try {
             $proj = new ProjectService();
 
             $prjs = $proj->getAllProjects();
 
-            if (!$this->showMenu) {
+            if ($this->showMenu === false) {
+                $climate = new CLImate;
+
+                $climate->draw('passed');
+
+                $climate->table($prjs);
+
                 foreach ($prjs as $p) {
-                    $output->writeln($p->toString($field_exclude));
+                    //$output->writeln($p->toString($field_exclude));
+                    //$climate->out($p->toString($field_exclude));
                 }
                 return;
             }
