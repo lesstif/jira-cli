@@ -3,7 +3,7 @@
 <?php
 
 $appName = "PHP JIRA Command Line";
-$appVer = "0.01";
+$appVer = "0.1.0";
 
 if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/../../autoload.php';
