@@ -7,41 +7,32 @@ Inspired by [go-jira](https://github.com/Netflix-Skunkworks/go-jira), [jira-cmd]
 
 - PHP >= 5.6.0
 - [php jira rest client](https://github.com/lesstif/php-jira-rest-client)
+- PHP Posix extension for [cliMenu](https://github.com/php-school/cli-menu)
 
 # Installation
 
-1. Download and Install PHP Composer.
+1. Download PHAR package.
 
-	``` sh
-	curl -sS https://getcomposer.org/installer | php
-	```
-2. Next, clone the project into your working directory.
+   ``` sh
+   mkdir jira-cli
+   cd jira-cli
+   wget https://github.com/lesstif/jira-cli/releases/download/0.1.0/jira-cli.phar.gz
+   ```
+2. Decompress downloaded package.
 
-    ```sh
-    git clone https://github.com/lesstif/jira-cli
-    cd jira-cli
-    ```
+   ```sh
+   gzip -d jira-cli.phar.gz
+   ```
 
-3. Next, run the Composer command to install the latest version of the dependent libraries.
+3. create .env on your jira-cli directory and editing it.
 
-	``` sh
-	php composer.phar install
-	```
-
-3. Then run Composer's install or update commands to complete installation.
-
-	```sh
-	php composer.phar install
-	```
+   ``` sh
+   JIRA_HOST="https://your-jira.host.com"
+   JIRA_USER="jira-username"
+   JIRA_PASS="jira-password"
+   ```
 
 
-# Configuration
-
-copy .env.example file to .env on your project root and editing it.
-
-	JIRA_HOST="https://your-jira.host.com"
-	JIRA_USER="jira-username"
-	JIRA_PASS="jira-password"
 
 # Usage
 
@@ -52,12 +43,11 @@ copy .env.example file to .env on your project root and editing it.
 ### Get Project Info
 
 ```sh
-$ php jira-cli project:show MYPROJECT --field-exclude "self,avatarUrls,roles,versions"
+$ php jira-cli.phar project:show MYPROJECT --field-exclude "self,avatarUrls,roles,versions"
 ```
 
 ### Get All Project list
 
 ```sh
-$ php jira-cli project:list --field-exclude "self,projectCategory,avatarUrls"
-
+$ php jira-cli.phar project:list --field-exclude "self,projectCategory,avatarUrls"
 ```
