@@ -3,6 +3,7 @@
 namespace Lesstif\JiraCli\Project;
 
 use Lesstif\JiraCli\JiraCommand;
+use Lesstif\JiraCli\Menu\ItemChooser;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,8 @@ use PhpSchool\CliMenu\CliMenu;
 use PhpSchool\CliMenu\CliMenuBuilder;
 
 use League\CLImate\CLImate;
+
+use JiraRestApi\Dumper;
 
 class ListCommand extends JiraCommand
 {
@@ -53,12 +56,19 @@ class ListCommand extends JiraCommand
 
                 $climate->draw('passed');
 
-                $climate->table($prjs);
+                $rows = collect();
 
                 foreach ($prjs as $p) {
-                    //$output->writeln($p->toString($field_exclude));
-                    //$climate->out($p->toString($field_exclude));
+                    $ar = [];
+
+                    $ar['key'] = $p->key;
+                    $ar['name'] = $p->name;
+
+                    $rows->push($ar);
                 }
+
+                $climate->table($rows->toArray());
+
                 return;
             }
 
@@ -66,8 +76,13 @@ class ListCommand extends JiraCommand
                 $text = explode("-", $menu->getSelectedItem()->getText());
                 $key = trim($text[0]);
 
+                $menu->close();
+
                 $p = (new ProjectService())->get($key);
-                var_dump($p);
+
+                $climate = new CLImate;
+                $climate->table($p->toArray(['name', 'key', 'description'],false));
+                //Dumper::dd($p->toArray(['name', 'key', 'description'],false));
             };
 
             $builder = (new CliMenuBuilder)
