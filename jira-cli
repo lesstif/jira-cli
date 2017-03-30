@@ -19,6 +19,7 @@ $app->add(new Lesstif\JiraCli\Project\ShowCommand());
 
 // Issue Command
 $app->add(new Lesstif\JiraCli\Issue\CreateCommand());
+$app->add(new Lesstif\JiraCli\Issue\ShowCommand());
 
 // Console
 $app->add(new Lesstif\JiraCli\ConsoleCommand());
