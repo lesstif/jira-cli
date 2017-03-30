@@ -8,7 +8,6 @@
     "monolog/monolog": "~1.12",
     "symfony/console": "~2.3|~3.0",
     "lesstif/php-jira-rest-client": "^1.7",
-    "php-school/cli-menu": "^2.0",
     "league/climate": "^3.2",
     "tightenco/collect": "^5.3"
   },
